@@ -1,0 +1,26 @@
+
+//set default
+run("Close All");run("Collect Garbage");
+
+//input
+dir1 = getDirectory("select a folder that contains image to process");
+dir2 = getDirectory("select a folder to save image to process");
+list = getFileList(dir1);
+setBatchMode(true);
+for(c=0; c<list.length; c++){
+	path = dir1 + list[c];	
+	open(path);
+	
+	name = File.nameWithoutExtension;
+	name = replace(name,"_T", "_X");
+	name = replace(name,"_XY", "_Y");
+	
+	
+	start=indexOf(name, "_X")+1;
+	end=lengthOf(name);
+	name = substring(name, start,end);
+	name = "Tile_" +name;
+
+	saveAs("tif", dir2 + name);
+	run("Close All");run("Collect Garbage");
+}
